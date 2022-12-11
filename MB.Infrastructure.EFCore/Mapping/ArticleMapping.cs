@@ -10,6 +10,11 @@ public class ArticleMapping:IEntityTypeConfiguration<Article>
     {
         builder.ToTable("Articles");
         builder.HasKey(a => a.Id);
+        builder.Property(a => a.Title).HasMaxLength(500);
+        builder.Property(a => a.Image).HasMaxLength(500);
+        builder.Property(a => a.ShortDescription).HasMaxLength(500);
+        
         builder.HasOne(a => a.ArticleCategory).WithMany(a => a.Articles).HasForeignKey(a => a.ArticleCategoryId);
+        
     }
 }

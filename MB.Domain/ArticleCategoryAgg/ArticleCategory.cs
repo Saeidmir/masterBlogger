@@ -15,10 +15,16 @@ public class ArticleCategory
     public ArticleCategory(string title , IArticleCategoryValidationService validatorService)
     {
         GuardAgainstEmptyTitle(title);
+        validatorService.CheckThisRecordAlreadyExists(title);
         Title = title;
         IsDeleted = false;
         CreationDate = DateTime.Now;
         Articles = new List<Article>();
+    }
+
+    public ArticleCategory()
+    {
+        
     }
 
     public void GuardAgainstEmptyTitle(string title)

@@ -9,7 +9,7 @@ public class Article
     public string ShortDescription { get; private set; }
     public string Image { get; private set; }
     public string ImageContent { get; private set; }
-    public bool IsDelete { get; private set; }
+    public bool IsDeleted { get; private set; }
     public DateTime CreationDate { get; private set; }
     public long ArticleCategoryId { get; private set; }
     public ArticleCategory ArticleCategory { get; private set; }
@@ -22,7 +22,7 @@ public class Article
         Image = image;
         ImageContent = imageContent;
         ArticleCategoryId = articleCategoryId;
-        IsDelete = false;
-            CreationDate = DateTime.Now;;
+        IsDeleted = false;
+        CreationDate = DateTime.Now;;
     }
 }

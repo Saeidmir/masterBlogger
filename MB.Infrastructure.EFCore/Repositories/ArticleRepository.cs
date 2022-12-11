@@ -1,4 +1,7 @@
-﻿using MB.Application.Contracts.Article;
+﻿using System.Globalization;
+using MB.Application.Contracts.Article;
+using MB.Domain.ArticleAgg;
+using Microsoft.EntityFrameworkCore;
 
 namespace MB.Infrastructure.EFCore.Repositories;
 
@@ -9,5 +12,23 @@ public class ArticleRepository:IArticleRepository
     public ArticleRepository(MasterBloggerContext context)
     {
         _context = context;
+    }
+
+    public List<ArticleViewModel> GetList()
+    {
+        return  _context.Articles.Include(a=>a.ArticleCategory).Select(a=>new ArticleViewModel(){
+            Id=a.Id,
+            Title = a.Title,
+            ArticleCategory = a.ArticleCategory.Title,
+            IsDeleted = a.IsDeleted,
+            CreationDate = a.CreationDate.ToString(CultureInfo.InvariantCulture)
+            
+            }).ToList();
+    }
+
+    public void CreateAndSave(Article entity)
+    {
+        _context.Articles.Add(entity);
+        _context.SaveChanges();
     }
 }

@@ -10,9 +10,10 @@ public class ArticleCategoryApplication : IArticleCategoryApplication
     private readonly IArticleCategoryRepository _articleCategoryRepository;
     private readonly IArticleCategoryValidationService _articleCategoryValidationService;
 
-    public ArticleCategoryApplication(IArticleCategoryRepository articleCategoryRepository)
+    public ArticleCategoryApplication(IArticleCategoryRepository articleCategoryRepository, IArticleCategoryValidationService articleCategoryValidationService)
     {
         _articleCategoryRepository = articleCategoryRepository;
+        _articleCategoryValidationService = articleCategoryValidationService;
     }
 
     public List<ArticleCategoryViewModel> List()

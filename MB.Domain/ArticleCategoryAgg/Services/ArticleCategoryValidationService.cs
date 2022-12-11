@@ -2,7 +2,7 @@
 
 namespace MB.Domain.ArticleCategoryAgg.Services;
 
-class ArticleCategoryValidationService : IArticleCategoryValidationService
+public class ArticleCategoryValidationService : IArticleCategoryValidationService
 {
     private readonly IArticleCategoryRepository _articleCategoryRepository;
 
