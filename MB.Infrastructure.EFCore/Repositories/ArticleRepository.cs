@@ -31,4 +31,15 @@ public class ArticleRepository:IArticleRepository
         _context.Articles.Add(entity);
         _context.SaveChanges();
     }
+
+    public Article Get(long id)
+    {
+        return _context.Articles.FirstOrDefault(a=>a.Id == id);
+    }
+
+    public void Save()
+    {
+        _context.SaveChanges();
+        
+    }
 }
