@@ -2,6 +2,7 @@
 using MB.Application.Contracts.Article;
 using MB.Application.Contracts.ArticleCategory;
 using MB.Domain.ArticleAgg;
+using MB.Domain.ArticleAgg.Services;
 using MB.Domain.ArticleCategoryAgg;
 using MB.Domain.ArticleCategoryAgg.Services;
 using MB.Infrastructure.EFCore;
@@ -17,11 +18,13 @@ public class Bootstrapper
     {
         services.AddTransient<IArticleCategoryApplication, ArticleCategoryApplication>();
         services.AddTransient<IArticleCategoryRepository, ArticleCategoryRepository>();
+        services.AddTransient<IArticleCategoryValidationService, ArticleCategoryValidationService>();
+        
         services.AddTransient<IArticleApplication, ArticleApplication>();
         services.AddTransient<IArticleRepository, ArticleRepository>();
+        services.AddTransient<IArticleValidatorService, ArticleValidatorService>();
         
             
-        services.AddTransient<IArticleCategoryValidationService, ArticleCategoryValidationService>();
         services.AddDbContext<MasterBloggerContext>(opts =>
         {
             opts.UseSqlServer(connectionString);

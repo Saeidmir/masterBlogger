@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MB.Infrastructure.EFCore.Repositories;
 
-public class ArticleRepository:IArticleRepository
+public class ArticleRepository : IArticleRepository
 {
     private readonly MasterBloggerContext _context;
 
@@ -16,14 +16,14 @@ public class ArticleRepository:IArticleRepository
 
     public List<ArticleViewModel> GetList()
     {
-        return  _context.Articles.Include(a=>a.ArticleCategory).Select(a=>new ArticleViewModel(){
-            Id=a.Id,
+        return _context.Articles.Include(a => a.ArticleCategory).Select(a => new ArticleViewModel()
+        {
+            Id = a.Id,
             Title = a.Title,
             ArticleCategory = a.ArticleCategory.Title,
             IsDeleted = a.IsDeleted,
             CreationDate = a.CreationDate.ToString(CultureInfo.InvariantCulture)
-            
-            }).ToList();
+        }).ToList();
     }
 
     public void CreateAndSave(Article entity)
@@ -34,12 +34,16 @@ public class ArticleRepository:IArticleRepository
 
     public Article Get(long id)
     {
-        return _context.Articles.FirstOrDefault(a=>a.Id == id);
+        return _context.Articles.FirstOrDefault(a => a.Id == id);
     }
 
     public void Save()
     {
         _context.SaveChanges();
-        
+    }
+
+    public bool Exists(string title)
+    {
+        return _context.Articles.Any(a => a.Title == title);
     }
 }

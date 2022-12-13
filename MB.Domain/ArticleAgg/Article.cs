@@ -17,6 +17,7 @@ public class Article
 
     public Article(string title, string shortDescription, string image, string content, long articleCategoryId)
     {
+        ValidateArticle(title, articleCategoryId);
         Title = title;
         ShortDescription = shortDescription;
         Image = image;
@@ -25,7 +26,21 @@ public class Article
         IsDeleted = false;
         CreationDate = DateTime.Now;;
     }
-    
+
+    private static void ValidateArticle(string title, long articleCategoryId)
+    {
+        ValidateArticle(title, articleCategoryId);
+        if (string.IsNullOrWhiteSpace(title))
+        {
+            throw new ArgumentNullException();
+        }
+
+        if (articleCategoryId == 0)
+        {
+            throw new ArgumentOutOfRangeException();
+        }
+    }
+
     public void Edit(string title, string shortDescription, string image, string content, long articleCategoryId)
     {
         Title = title;
