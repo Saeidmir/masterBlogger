@@ -17,7 +17,7 @@ public class Article
 
     public Article(string title, string shortDescription, string image, string content, long articleCategoryId)
     {
-        ValidateArticle(title, articleCategoryId);
+        // ValidateArticle(title, articleCategoryId);
         Title = title;
         ShortDescription = shortDescription;
         Image = image;

@@ -27,7 +27,7 @@ public class ArticleApplication:IArticleApplication
     public void Edit(EditArticle command)
     {
         var article=_articleRepository.Get(command.Id);
-        article.Edit(command.Title,command.ShortDescription,command.Image,command.Image,command.ArticleCategoryId);
+        article.Edit(command.Title,command.ShortDescription,command.Image,command.Content,command.ArticleCategoryId);
         _articleRepository.Save();
     }
 

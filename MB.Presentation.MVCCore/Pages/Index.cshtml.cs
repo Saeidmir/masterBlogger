@@ -1,4 +1,5 @@
 ﻿
+using MB.Infrastructure.Query;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace MB.Presentation.MVCCore.Pages
@@ -14,9 +15,16 @@ namespace MB.Presentation.MVCCore.Pages
             _articleQuery = articleQuery;
         }
 */
+        public IndexModel(IArticleQuery articleQuery)
+        {
+            _articleQuery = articleQuery;
+        }
+
+        public List<ArticleQueryView> Articles { get; set; }
+        private readonly IArticleQuery _articleQuery;
         public void OnGet()
         {
-            // Articles = _articleQuery.GetArticles();
+            Articles = _articleQuery.GetArticles();
         }
     }
 }
