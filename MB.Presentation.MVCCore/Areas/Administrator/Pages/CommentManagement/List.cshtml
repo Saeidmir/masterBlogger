@@ -1,0 +1,75 @@
+﻿@page
+@using MB.Domain.CommentsAgg
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Onion.Presentation.Areas.Administrator.Pages.CommentManagement.List
+
+@{
+
+}
+
+<div class="ccd">
+    <div class="ccd-header">
+        <h3 class="float-left">Comments List</h3>
+        @*<div class="float-right">
+            <a class="btn btn-success" asp-page="./Create" asp-cea="Administrator">Add New</a>
+        </div>*@
+    </div>
+    <div class="ccd-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th >
+                <th>Message</th >
+                <th>Article </th >
+                <th>Status</th >
+                <th>CreationDate</th>
+                <th>Operations</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var c in Model.comments)
+            {
+                <tr>
+                    <td>@c.Id</td>
+                    <td>@c.Name</td>
+                    <td>@c.Email</td>
+                    <td>@c.Message</td>
+                    <td>@c.Article</td>
+                    <td>
+                        
+                        @if (c.Status == Statuses.New)
+                        {
+                            <i class="fa fa-eye fa-2x text-info"></i>
+                        }
+                        else if (c.Status == Statuses.Canceled){
+                        <i class="fa fa-close fa-2x text-danger"></i>
+                        }
+                        else
+                        {
+                            <i class="fa fa-check fa-2x text-success"></i>
+                        }
+                    </td>
+                    <td>@c.CreationDate</td>
+                    <td>
+                        <a class="btn btn-wcning float-left mr-3" asp-page="Edit" asp-route-id="@c.Id">Edit</a>
+                        @if (c.Status == Statuses.New)
+                        {
+                            <form method="post" asp-page-handler="Confirm" class="float-left">
+                                <button class="btn btn-success">Confirm</button>
+                                <input type="hidden" name="id" value="@c.Id">
+                            </form>
+                            <form method="post" asp-page-handler="Cancel" class="float-left">
+                                <button class="btn btn-danger">Cancel</button>
+                                <input type="hidden" name="id" value="@c.Id">
+                            </form>
+                        }
+                    </td>
+
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

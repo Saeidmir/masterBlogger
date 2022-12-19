@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using MB.Domain.CommentsAgg;
 using MB.Infrastructure.EFCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,14 +16,18 @@ public class ArticleQuery : IArticleQuery
 
     public List<ArticleQueryView> GetArticles()
     {
-        return _context.Articles.Include(a => a.ArticleCategory).Select(a => new ArticleQueryView()
+        return _context.Articles
+            .Include(a => a.ArticleCategory)
+            .Include(a=>a.Comments).Select(a => new ArticleQueryView()
         {
             Id = a.Id,
             Title = a.Title,
             Image = a.Image,
             ArticleCategory = a.ArticleCategory.Title,
             CreationDate = a.CreationDate.ToString(CultureInfo.InvariantCulture),
-            ShortDescription = a.ShortDescription
+            ShortDescription = a.ShortDescription,
+            CommentsCount = a.Comments.Count(a=>a.Status == Statuses.Confirmed)
+            
         }).ToList();
     }
 
@@ -36,7 +41,16 @@ public class ArticleQuery : IArticleQuery
             ArticleCategory = a.ArticleCategory.Title,
             CreationDate = a.CreationDate.ToString(CultureInfo.InvariantCulture),
             ShortDescription = a.ShortDescription,
-            Content = a.Content
+            Content = a.Content,
+            CommentsCount = a.Comments.Count(a=>a.Status == Statuses.Confirmed),
+            Comments = MapComments(a.Comments.Where(a=>a.Status == Statuses.Confirmed))
+            
         }).FirstOrDefault(a=>a.Id==id);
+    }
+
+    private static List<CommentsQueryView> MapComments(IEnumerable<Comment> comments)
+    {
+        return comments.Select(comment => new CommentsQueryView()
+            { Name = comment.Name, Message = comment.Message, CreationDate = comment.CreationDate.ToString(CultureInfo.InvariantCulture) }).ToList();
     }
 }
