@@ -15,6 +15,7 @@ public class ArticleMapping:IEntityTypeConfiguration<Article>
         builder.Property(a => a.ShortDescription).HasMaxLength(500);
         
         builder.HasOne(a => a.ArticleCategory).WithMany(a => a.Articles).HasForeignKey(a => a.ArticleCategoryId);
-        
+        builder.HasMany(a => a.Comments).WithOne(a => a.Article).HasForeignKey(a => a.ArticleId);
+
     }
 }
